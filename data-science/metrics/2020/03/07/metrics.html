@@ -1,0 +1,185 @@
+<h1 id="the-challenge-with-simple-evaluation-metrics-in-machine-learning">The challenge with simple evaluation metrics in machine learning</h1>
+
+<p>Picking a metric for your problem implies defining success. This makes it important to know different metrics, their shortcomings and possible mediating actions when metrics are not sufficient. There has been many interesting pieces on this topic lately. My sources for this post are:</p>
+<ul>
+  <li><a href="http://lineardigressions.com/episodes/2019/12/22/data-scientists-beware-of-simple-metrics">Data scientists: beware of simple metrics</a>: Episode of the podcast <a href="http://lineardigressions.com/">Linear Digressions</a> that provides a gentle introduction to the topic, and was my source for the articles below.</li>
+  <li><a id="1">[1]</a>: <a href="https://arxiv.org/ftp/arxiv/papers/2002/2002.08512.pdf">Reliance on Metrics is a Fundamental Challenge for AI</a>: Reviews of different case studies showing how emphasis on metrics can lead to manipulation, gaming of scores and focus on short-term goals and how to adress the issues.</li>
+  <li><a id="2">[2]</a>: <a href="https://arxiv.org/pdf/1909.12475.pdf">Hidden Stratification Causes Clinically Meaningful Failures in Machine Learning for Medical Imaging</a>: Introduces a concept reminding me of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson’s paradox</a>, where a model outperforms humans (or another model) in the average, but underperforms for a given subset, which may be critical for the outcome of using the model.</li>
+  <li><a id="3">[3]</a>: <a href="https://medium.com/shoprunner/evaluating-classification-models-1-ff0730801f17">Evaluating classification models</a>: This four part Medium series highlights classification model metrics, arguing for a single evaluation metric, but gives examples of different use cases for preferring different metrics.</li>
+</ul>
+
+<h1 id="the-problem">The problem</h1>
+<h2 id="metrics-in-machine-learning">Metrics in machine learning</h2>
+<p>Most AI algorithms are based on optimizing metrics, and due to algorithms optimizing blindly, and <em>too efficiently</em>, a model that scores better on metrics may often lead to outcomes that are far from optimal. The paper cites <em>Goodhart’s law</em>:</p>
+
+<blockquote>
+  <p>When a measure becomes a target, it ceases to be a good measure.</p>
+</blockquote>
+
+<p>Goodhart’s law arose in the 1970s after attemps to slow down inflation, by choosing metrics with stable relationships to inflation as targets for central banks. However, the relationships between the chosen metrics and inflation broke down when the metrics were chosen as targets. The law arose from observing human behaviour, but an algorthim will optimize more efficiently as is therefore more prone to following this law.</p>
+
+<p>As training a model is explicitly defined around optimizing a specific metric, such as accuracy or error rate, we knowingly or unknowingly make priotizations in our problem, such as</p>
+<ul>
+  <li>whether or not we can give partial credit for some answers</li>
+  <li>whether or not false positives are equally weighted as false negatives</li>
+  <li>whether or not we penalize frequent medium errors the same as rare large errors</li>
+</ul>
+
+<h2 id="four-problems-with-metrics">Four problems with metrics</h2>
+<p>The problems found by case study review in <a href="#1">[1]</a> are:</p>
+<ul>
+  <li>Metrics are proxies
+    <ul>
+      <li>They may be invalid in corner cases, extreme cases or represent a non-causal relationship, for example: When we want to assess crime, we measure arrests.</li>
+      <li>We don’t always realize that we are measuring a proxy, i.e. that our dataset does not contain features that are actually correlated with the goal. An example given was a study to investigate stroke patients, that ended up finding patients who were able to use the health care services.</li>
+    </ul>
+  </li>
+  <li>Metrics will be gamed, not only in model selection but by models themselves.
+    <ul>
+      <li>In reinforcement learning, two types of gaming are <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRPiprOaC3HsCf5Tuum8bRfzYUiKLRqJmbOoC-32JorNdfyTiRRsR7Ea5eWtvsWzuxo8bjOxCG84dAg/pubhtml">common</a>:
+        <ul>
+          <li>gaming metrics: exploiting a poor definition of metrics</li>
+          <li>finding glithces in implementations of environment or reward function</li>
+        </ul>
+      </li>
+      <li>Recommender algorithms are also prone to be gamed as adversarial attacks</li>
+    </ul>
+  </li>
+  <li>Metrics over-emphasize short-term goals
+    <ul>
+      <li>A common example is the click-through rate which does not tell us anything about long term effects on readers’ behaviour</li>
+      <li>YouTube &amp; Facebook both have examples of promoting horrible content, which eventually damages hiring abilities for the companies</li>
+    </ul>
+  </li>
+  <li>Many online metrics are gathered in highly addictive environments</li>
+</ul>
+
+<h2 id="hidden-stratification">Hidden stratification</h2>
+<p>Another problem described in <a href="#2">[2]</a> as hidden stratification manifests as a model outperforming humans in the aggregate, but underperforming in a critical segment, i.e. there are hidden subsets of the data where performance is poor. Many metrics will not reveal this, as they are dominated by larger subsets.</p>
+
+<p>Hidden stratification is particularly important in medical research, and other fields where the cost of false negatives can be far higher than the cost of false positives (or vice versa). An example is a model that on average outperforms human in classifying scans as cancerous or healthy, but underperforms for the most aggressive cancer types. If the task was allocated to the model alone, this could in fact lead to higher mortality.</p>
+
+<p>Whether or not hidden stratification poses a problem is identified through the dataset, likely progression of events and consequences:</p>
+<ul>
+  <li>imbalanced classes, where the most serious events happen rarely</li>
+  <li>rapidly developing complications</li>
+  <li>imbalance in consequences, where consequences of one class is far more serious than other classes.</li>
+</ul>
+
+<p>Different structures of subclasses contribute to degraded performance:</p>
+<ul>
+  <li>Low subclass prevalence</li>
+  <li>Reduced accuracy of labels in the subclass</li>
+  <li>Subtle discriminative features</li>
+  <li>Spurious correlations</li>
+</ul>
+
+<h1 id="proposed-solutions-and-mitigating-measures">Proposed solutions and mitigating measures</h1>
+<h2 id="three-solutions-to-adress-weaknesses-of-metrics">Three solutions to adress weaknesses of metrics</h2>
+<p>Solutions proposed in <a href="#1">[1]</a> are:</p>
+<ul>
+  <li><strong>Use several different metrics</strong>, to prevent gaming and to obtain a more robust basis for evaluation, for example by using
+    <ul>
+      <li>Metrics measuring different proxies of the same goal</li>
+      <li>Metrics measuring the same proxy for different time horizons</li>
+    </ul>
+  </li>
+  <li><strong>Combine metrics with qualitative accounts</strong>. Two concrete suggestions for accounts accompanying metrics are
+    <ul>
+      <li><strong><a href="https://arxiv.org/pdf/1810.03993.pdf">Model cards for model reporting</a></strong> are fact sheets containing additional information on trained models, aimed to reduce unintended side effects of using models wrongly. The cards are intended for model developers, software developers, impacted individuals, policy makers etc. containing descriptions of (among other details):
+        <ul>
+          <li>Indented use, intended users and out-of-scope use cases</li>
+          <li>Metrics, decision thresholds and how uncertainty in metrics has been assessed</li>
+          <li>Details on the evaluation dataset and training dataset if possible: description, preprocessing, motivation behind chosen datasets</li>
+          <li>Factors: groups of observations in dataset, instrumentation of observations, environment where data has been collected</li>
+        </ul>
+      </li>
+      <li><strong><a href="https://arxiv.org/pdf/1803.09010.pdf">Datasheets for datasets</a></strong> are fact sheets to facilitate communication between dataset creators and dataset consumers answering questions within the topics
+        <ul>
+          <li>Motivation (what problem prompted the creation, who created it, with support from whom)</li>
+          <li>Composition (Is it a sample or a complete set, labels, missing information, recommended split, error sources, is it self contained)</li>
+          <li>Collection process (directly observed/self reported/inferred, time frame for collection, sampling strategy if any)</li>
+          <li>Preprocessing (discretization, binning, removal of observations, processing of missing values, link to raw data, link to software for data cleaning)</li>
+          <li>Uses (Tasks the dataset is currently or previously used for, potential other tasks, potential impact to future uses from creation process of the dataset)</li>
+          <li>Distribution (Availability and sensitivity of dataset)</li>
+          <li>Maintenance (Who is responsible, will the dataset be updated, erratum, availability of older versions, procedures if users want to extend the dataset)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Involve different stakeholders in the initial metric development</strong>. <em>Model cards</em> suggests involving stakeholders by teaching the implications of an already existing model, but <a href="#1">[1]</a> suggests even involving stakeholders in development of metrics.</li>
+</ul>
+
+<h2 id="measuring-hidden-stratifications-so-it-can-be-addressed">Measuring hidden stratifications so it can be addressed</h2>
+<p><a href="#2">[2]</a> proposes three strategies for measuring hidden stratifications, which then need to be addressed by models in different ways.</p>
+<ul>
+  <li><strong>Schema completion</strong>: A schema author defines all subsets that need to be labeled, and performs labeling on the test dataset.
+    <ul>
+      <li>Enables accurate reporting</li>
+      <li>Helps guide model development</li>
+      <li>Time consuming</li>
+      <li>Limited by the knowledge of the schema author</li>
+    </ul>
+
+    <p>Experiments showed substantial differences in AUC score for different subsets identified by a medical professional, for a dataset exhibiting low subclass prevalence and subtle discriminative features as well as one exhibiting poor label quality and subtle discriminative features.</p>
+  </li>
+  <li><strong>Error auditing</strong>: An auditor examines model output in search of irregularities such as consistently incorrect predictions on a recognizable subclass.
+    <ul>
+      <li>Not limited by the expectations of a schema author</li>
+      <li>Only concerning subclasses need to be examined, thus more labor-efficient than schema completion</li>
+      <li>Limited by the weaknesses identified by the auditor, therefore not as exhaustive a search as the schema completion</li>
+      <li>Limited by errors prevalent in the test set, may not be representative for small subsets</li>
+    </ul>
+
+    <p>The method was tested on a dataset with spurious correlations. A particular subset was found to be prevalent in the test set false negatives, and labeled each observation in the test set accordingly. The spurious correlation factor in the poorly performing subset, was found to have a corresponding superset without the spurious correlation factor with high AUC scores.</p>
+  </li>
+  <li><strong>Algorithmic measurement</strong>: An algorithmic search for for subclasses, such as clustering.
+    <ul>
+      <li>Less dependent on a human identifying all relevant subsets</li>
+      <li>Can reduce burden on a human analyst</li>
+      <li>Efficiency is limited by the difficulty of separating subclasses in the feature space of the analysis</li>
+      <li>Still requires human review</li>
+    </ul>
+
+    <p>Concretely, a simple k-means algorithm was applied for k from 2 - 5. For each k, the two clusters (with more than 100 observations) with the largest difference in error rate was identified. From these four pairs, the one with the largest Euclidian distance between centres is chosen. The method is not always successful in producing well-separated clusters for clinically meaningful subclasses, but may be useful with improved clustering algorithms, or in addition to one of the other methods.</p>
+  </li>
+</ul>
+
+<h2 id="combining-metrics-to-a-single-evaluation-metric">Combining metrics to a single evaluation metric</h2>
+<p><a href="#3">[3]</a> seemingly opposes <a href="#1">[1]</a> and <a href="#2">[2]</a> and recommends that we decide on one single metric in order to be able to iterate quickly and develop and rank new models, and argues that using a slate of different metrics is more suited for model diagnostics than evaluation. This approach is also <a href="https://www.coursera.org/lecture/machine-learning-projects/single-number-evaluation-metric-wIKkC">recommended by the famous Andrew Ng</a> for model development.</p>
+
+<p><a href="#3">[3]</a> discusses metrics for classification models, where we measure false positives and false negatives, bringing us to precision and recall, precision being the fraction of positive predictions that are correct, and recall being the fraction of predictions on the positive class that are correct. Two different models are examined, one with better precision, and one with better recall. When choosing between the two, we choose how much better precision or recall we want to get, by sacrificing the other.</p>
+
+<p>To get to a single metric, the article proposes different combinations of precision P and recall R:</p>
+<ul>
+  <li>Linear relationships
+    <ul>
+      <li><strong>Weighted arithmetic mean</strong>: A simple arithmetic mean is just 0.5P + 0.5R. We would weight precision and recall equally, always being willing to trade one unit of precision for one unit of recall. We could weight precision and recall differently, for example by saying we will trade one unit of precision for <em>a</em> units of recall, indicating for <em>a &gt; 0</em> that we care more about precision than recall. This represents a <strong>linear relationship</strong> between the trade-off. If <em>a = 2</em>, a model with a precision of 80 % and recall of 40 % is equally good as a model with precision of 70 % and recall of 60 %.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Non-linear relationships</p>
+
+    <p>The article proposes several different non-linear combinations:</p>
+    <ul>
+      <li><strong>Weighted harmonic mean</strong></li>
+      <li><strong>Weighted geometric mean</strong></li>
+      <li><strong>Weighted power mean</strong></li>
+    </ul>
+
+    <p>With a non-linear relationship, the relative importance of precision and recall depend on their current values. When recall is low, recall is valued higher than precision and vice versa.
+A geometric mean is closer to the linear relationship than the harmonic mean. Whereas the geometric and harmonic mean, had constant preference lines that curved upwards for all parameter values, the power means are more flexible, and curvature of the constant preference lines shift from curving upwards to downwards as we vary parameters.</p>
+  </li>
+</ul>
+
+<p>The author argues that whether or not arithmetic means are sufficient depends on the nature of the problem. In clinical situations, arithmetic means are often sufficient. Each individual experiences one single prediction from the model. The author works in retail, where the rate of false positive to false negative classifications is valued differently based on the level of false positives, and each individual experiences a range of predictions from the model. As the author puts it, it is not each single prediction that matters, but the <em>overall impression</em>, as is typical for information retrieval problems. For example, at a high recall (we are classifying most dresses as dresses), another point of recall isn’t that important, because a customer will find the dress they are looking for, and it is more important to improve precision, such that there are fewer false positives. Equivalenty, if precision is very high, it is probably more important to work on the recall, making sure the customer can be exposed to all dresses, rather than making sure that the customer is not exposed to something which is not a dress.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+<p>It seems that everyone has a favorite urban legend of how a metric was gamed or lead to unforseen consequences, be it from human experience or a reinforcement learning agent. The three articles seem to assess the situation differently:</p>
+<ul>
+  <li><a href="#1">[1]</a> proposes different ways to enrich simple metrics: using several metrics, using qualitative accounts in addition, and letting stakeholders take part in defining metrics. Spending more time defining and reviewing effects of metrics with stakeholders it probably time well spent, although iteration cycles for models will be longer with a slate of metrics. Although I like the idea of explicitly stating the intended purpose and out-of-scope use cases for a model, I wonder how it should be implemented in order to keep it updated and helpful for relevant end users.</li>
+  <li><a href="#2">[2]</a> does not directly propose a solution, but exposes a problem and the settings in which we should investigate whether our models have hidden stratifications that may worsen end outcomes although performance metrics show improvements. Although these problems do not always lead to fatal outcomes, investigating models to find subdomains of poor performance is a good practice to improve models, and should be practiced systematically.</li>
+  <li>Whereas <a href="#1">[1]</a> and <a href="#2">[2]</a> show weaknesses of single metric evaluation, <a href="#3">[3]</a> argues for the benefits to model development iteration cycles. I find this very compelling. Although I haven’t used the particular metrics described in the series in practice, the concept of experimenting with finding and reviewing which metric is used seems to mediate some of the shortcomings of single metrics. Using several metrics lead us to implicitly weighing them against eachother, whereas combining metrics to a single number leads to an explicit definition, which again leads to concrete and transparent examples which we can discuss with stakeholders.</li>
+</ul>
+
+<p>It seems to me that a single metric for evaluation can be a recipe for disaster or success, depending on the execution, transparency and willingness to adjust. If done correctly, I think it leverages some of the benefits found in the metrics article, while still obtaining a simple way to evaluate experiments and quickly develop and test new hypotheses. If done poorly, it is just another metric that can be gamed.</p>
