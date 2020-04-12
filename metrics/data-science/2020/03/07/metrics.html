@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-07T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"The challenge with simple evaluation metrics in machine learning","headline":"Challenges with simple metrics in machine learning","dateModified":"2020-03-07T00:00:00-06:00","datePublished":"2020-03-07T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html"},"url":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html","@context":"https://schema.org"}</script>
+{"description":"The challenge with simple evaluation metrics in machine learning","@type":"BlogPosting","headline":"Challenges with simple metrics in machine learning","dateModified":"2020-03-07T00:00:00-06:00","datePublished":"2020-03-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html"},"url":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/notes/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gunnhildsp.github.io/notes/feed.xml" title="Gunnhild's notes" /><link rel="shortcut icon" type="image/x-icon" href="/notes/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Challenges with simple metrics in machine learning | Gunnhild’s notes</title>
@@ -30,7 +30,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-03-07T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"The challenge with simple evaluation metrics in machine learning","headline":"Challenges with simple metrics in machine learning","dateModified":"2020-03-07T00:00:00-06:00","datePublished":"2020-03-07T00:00:00-06:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html"},"url":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html","@context":"https://schema.org"}</script>
+{"description":"The challenge with simple evaluation metrics in machine learning","@type":"BlogPosting","headline":"Challenges with simple metrics in machine learning","dateModified":"2020-03-07T00:00:00-06:00","datePublished":"2020-03-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html"},"url":"https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -126,18 +126,42 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <h1 id="the-challenge-with-simple-evaluation-metrics-in-machine-learning">The challenge with simple evaluation metrics in machine learning</h1>
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#the-challenge-with-simple-evaluation-metrics-in-machine-learning">The challenge with simple evaluation metrics in machine learning</a></li>
+<li class="toc-entry toc-h1"><a href="#the-problem">The problem</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#metrics-in-machine-learning">Metrics in machine learning</a></li>
+<li class="toc-entry toc-h2"><a href="#four-problems-with-metrics">Four problems with metrics</a></li>
+<li class="toc-entry toc-h2"><a href="#hidden-stratification">Hidden stratification</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#proposed-solutions-and-mitigating-measures">Proposed solutions and mitigating measures</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#three-solutions-to-adress-weaknesses-of-metrics">Three solutions to adress weaknesses of metrics</a></li>
+<li class="toc-entry toc-h2"><a href="#measuring-hidden-stratifications-so-it-can-be-addressed">Measuring hidden stratifications so it can be addressed</a></li>
+<li class="toc-entry toc-h2"><a href="#combining-metrics-to-a-single-evaluation-metric">Combining metrics to a single evaluation metric</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+</ul><h1 id="the-challenge-with-simple-evaluation-metrics-in-machine-learning">
+<a class="anchor" href="#the-challenge-with-simple-evaluation-metrics-in-machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>The challenge with simple evaluation metrics in machine learning</h1>
 
 <p>Picking a metric for your problem implies defining success. This makes it important to know different metrics, their shortcomings and possible mediating actions when metrics are not sufficient. There has been many interesting pieces on this topic lately. My sources for this post are:</p>
 <ul>
-  <li><a href="http://lineardigressions.com/episodes/2019/12/22/data-scientists-beware-of-simple-metrics">Data scientists: beware of simple metrics</a>: Episode of the podcast <a href="http://lineardigressions.com/">Linear Digressions</a> that provides a gentle introduction to the topic, and was my source for the articles below.</li>
-  <li><a id="1">[1]</a>: <a href="https://arxiv.org/ftp/arxiv/papers/2002/2002.08512.pdf">Reliance on Metrics is a Fundamental Challenge for AI</a>: Reviews of different case studies showing how emphasis on metrics can lead to manipulation, gaming of scores and focus on short-term goals and how to adress the issues.</li>
-  <li><a id="2">[2]</a>: <a href="https://arxiv.org/pdf/1909.12475.pdf">Hidden Stratification Causes Clinically Meaningful Failures in Machine Learning for Medical Imaging</a>: Introduces a concept reminding me of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson’s paradox</a>, where a model outperforms humans (or another model) in the average, but underperforms for a given subset, which may be critical for the outcome of using the model.</li>
-  <li><a id="3">[3]</a>: <a href="https://medium.com/shoprunner/evaluating-classification-models-1-ff0730801f17">Evaluating classification models</a>: This four part Medium series highlights classification model metrics, arguing for a single evaluation metric, but gives examples of different use cases for preferring different metrics.</li>
+  <li>
+<a href="http://lineardigressions.com/episodes/2019/12/22/data-scientists-beware-of-simple-metrics">Data scientists: beware of simple metrics</a>: Episode of the podcast <a href="http://lineardigressions.com/">Linear Digressions</a> that provides a gentle introduction to the topic, and was my source for the articles below.</li>
+  <li>
+<a id="1">[1]</a>: <a href="https://arxiv.org/ftp/arxiv/papers/2002/2002.08512.pdf">Reliance on Metrics is a Fundamental Challenge for AI</a>: Reviews of different case studies showing how emphasis on metrics can lead to manipulation, gaming of scores and focus on short-term goals and how to adress the issues.</li>
+  <li>
+<a id="2">[2]</a>: <a href="https://arxiv.org/pdf/1909.12475.pdf">Hidden Stratification Causes Clinically Meaningful Failures in Machine Learning for Medical Imaging</a>: Introduces a concept reminding me of <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson’s paradox</a>, where a model outperforms humans (or another model) in the average, but underperforms for a given subset, which may be critical for the outcome of using the model.</li>
+  <li>
+<a id="3">[3]</a>: <a href="https://medium.com/shoprunner/evaluating-classification-models-1-ff0730801f17">Evaluating classification models</a>: This four part Medium series highlights classification model metrics, arguing for a single evaluation metric, but gives examples of different use cases for preferring different metrics.</li>
 </ul>
 
-<h1 id="the-problem">The problem</h1>
-<h2 id="metrics-in-machine-learning">Metrics in machine learning</h2>
+<h1 id="the-problem">
+<a class="anchor" href="#the-problem" aria-hidden="true"><span class="octicon octicon-link"></span></a>The problem</h1>
+<h2 id="metrics-in-machine-learning">
+<a class="anchor" href="#metrics-in-machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Metrics in machine learning</h2>
 <p>Most AI algorithms are based on optimizing metrics, and due to algorithms optimizing blindly, and <em>too efficiently</em>, a model that scores better on metrics may often lead to outcomes that are far from optimal. The paper cites <em>Goodhart’s law</em>:</p>
 
 <blockquote>
@@ -153,7 +177,8 @@ window.onload = wrap_img;
   <li>whether or not we penalize frequent medium errors the same as rare large errors</li>
 </ul>
 
-<h2 id="four-problems-with-metrics">Four problems with metrics</h2>
+<h2 id="four-problems-with-metrics">
+<a class="anchor" href="#four-problems-with-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Four problems with metrics</h2>
 <p>The problems found by case study review in <a href="#1">[1]</a> are:</p>
 <ul>
   <li>Metrics are proxies
@@ -182,7 +207,8 @@ window.onload = wrap_img;
   <li>Many online metrics are gathered in highly addictive environments</li>
 </ul>
 
-<h2 id="hidden-stratification">Hidden stratification</h2>
+<h2 id="hidden-stratification">
+<a class="anchor" href="#hidden-stratification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hidden stratification</h2>
 <p>Another problem described in <a href="#2">[2]</a> as hidden stratification manifests as a model outperforming humans in the aggregate, but underperforming in a critical segment, i.e. there are hidden subsets of the data where performance is poor. Many metrics will not reveal this, as they are dominated by larger subsets.</p>
 
 <p>Hidden stratification is particularly important in medical research, and other fields where the cost of false negatives can be far higher than the cost of false positives (or vice versa). An example is a model that on average outperforms human in classifying scans as cancerous or healthy, but underperforms for the most aggressive cancer types. If the task was allocated to the model alone, this could in fact lead to higher mortality.</p>
@@ -202,19 +228,24 @@ window.onload = wrap_img;
   <li>Spurious correlations</li>
 </ul>
 
-<h1 id="proposed-solutions-and-mitigating-measures">Proposed solutions and mitigating measures</h1>
-<h2 id="three-solutions-to-adress-weaknesses-of-metrics">Three solutions to adress weaknesses of metrics</h2>
+<h1 id="proposed-solutions-and-mitigating-measures">
+<a class="anchor" href="#proposed-solutions-and-mitigating-measures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Proposed solutions and mitigating measures</h1>
+<h2 id="three-solutions-to-adress-weaknesses-of-metrics">
+<a class="anchor" href="#three-solutions-to-adress-weaknesses-of-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Three solutions to adress weaknesses of metrics</h2>
 <p>Solutions proposed in <a href="#1">[1]</a> are:</p>
 <ul>
-  <li><strong>Use several different metrics</strong>, to prevent gaming and to obtain a more robust basis for evaluation, for example by using
+  <li>
+<strong>Use several different metrics</strong>, to prevent gaming and to obtain a more robust basis for evaluation, for example by using
     <ul>
       <li>Metrics measuring different proxies of the same goal</li>
       <li>Metrics measuring the same proxy for different time horizons</li>
     </ul>
   </li>
-  <li><strong>Combine metrics with qualitative accounts</strong>. Two concrete suggestions for accounts accompanying metrics are
+  <li>
+<strong>Combine metrics with qualitative accounts</strong>. Two concrete suggestions for accounts accompanying metrics are
     <ul>
-      <li><strong><a href="https://arxiv.org/pdf/1810.03993.pdf">Model cards for model reporting</a></strong> are fact sheets containing additional information on trained models, aimed to reduce unintended side effects of using models wrongly. The cards are intended for model developers, software developers, impacted individuals, policy makers etc. containing descriptions of (among other details):
+      <li>
+<strong><a href="https://arxiv.org/pdf/1810.03993.pdf">Model cards for model reporting</a></strong> are fact sheets containing additional information on trained models, aimed to reduce unintended side effects of using models wrongly. The cards are intended for model developers, software developers, impacted individuals, policy makers etc. containing descriptions of (among other details):
         <ul>
           <li>Indented use, intended users and out-of-scope use cases</li>
           <li>Metrics, decision thresholds and how uncertainty in metrics has been assessed</li>
@@ -222,7 +253,8 @@ window.onload = wrap_img;
           <li>Factors: groups of observations in dataset, instrumentation of observations, environment where data has been collected</li>
         </ul>
       </li>
-      <li><strong><a href="https://arxiv.org/pdf/1803.09010.pdf">Datasheets for datasets</a></strong> are fact sheets to facilitate communication between dataset creators and dataset consumers answering questions within the topics
+      <li>
+<strong><a href="https://arxiv.org/pdf/1803.09010.pdf">Datasheets for datasets</a></strong> are fact sheets to facilitate communication between dataset creators and dataset consumers answering questions within the topics
         <ul>
           <li>Motivation (what problem prompted the creation, who created it, with support from whom)</li>
           <li>Composition (Is it a sample or a complete set, labels, missing information, recommended split, error sources, is it self contained)</li>
@@ -235,13 +267,16 @@ window.onload = wrap_img;
       </li>
     </ul>
   </li>
-  <li><strong>Involve different stakeholders in the initial metric development</strong>. <em>Model cards</em> suggests involving stakeholders by teaching the implications of an already existing model, but <a href="#1">[1]</a> suggests even involving stakeholders in development of metrics.</li>
+  <li>
+<strong>Involve different stakeholders in the initial metric development</strong>. <em>Model cards</em> suggests involving stakeholders by teaching the implications of an already existing model, but <a href="#1">[1]</a> suggests even involving stakeholders in development of metrics.</li>
 </ul>
 
-<h2 id="measuring-hidden-stratifications-so-it-can-be-addressed">Measuring hidden stratifications so it can be addressed</h2>
+<h2 id="measuring-hidden-stratifications-so-it-can-be-addressed">
+<a class="anchor" href="#measuring-hidden-stratifications-so-it-can-be-addressed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring hidden stratifications so it can be addressed</h2>
 <p><a href="#2">[2]</a> proposes three strategies for measuring hidden stratifications, which then need to be addressed by models in different ways.</p>
 <ul>
-  <li><strong>Schema completion</strong>: A schema author defines all subsets that need to be labeled, and performs labeling on the test dataset.
+  <li>
+<strong>Schema completion</strong>: A schema author defines all subsets that need to be labeled, and performs labeling on the test dataset.
     <ul>
       <li>Enables accurate reporting</li>
       <li>Helps guide model development</li>
@@ -251,7 +286,8 @@ window.onload = wrap_img;
 
     <p>Experiments showed substantial differences in AUC score for different subsets identified by a medical professional, for a dataset exhibiting low subclass prevalence and subtle discriminative features as well as one exhibiting poor label quality and subtle discriminative features.</p>
   </li>
-  <li><strong>Error auditing</strong>: An auditor examines model output in search of irregularities such as consistently incorrect predictions on a recognizable subclass.
+  <li>
+<strong>Error auditing</strong>: An auditor examines model output in search of irregularities such as consistently incorrect predictions on a recognizable subclass.
     <ul>
       <li>Not limited by the expectations of a schema author</li>
       <li>Only concerning subclasses need to be examined, thus more labor-efficient than schema completion</li>
@@ -261,7 +297,8 @@ window.onload = wrap_img;
 
     <p>The method was tested on a dataset with spurious correlations. A particular subset was found to be prevalent in the test set false negatives, and labeled each observation in the test set accordingly. The spurious correlation factor in the poorly performing subset, was found to have a corresponding superset without the spurious correlation factor with high AUC scores.</p>
   </li>
-  <li><strong>Algorithmic measurement</strong>: An algorithmic search for for subclasses, such as clustering.
+  <li>
+<strong>Algorithmic measurement</strong>: An algorithmic search for for subclasses, such as clustering.
     <ul>
       <li>Less dependent on a human identifying all relevant subsets</li>
       <li>Can reduce burden on a human analyst</li>
@@ -273,7 +310,8 @@ window.onload = wrap_img;
   </li>
 </ul>
 
-<h2 id="combining-metrics-to-a-single-evaluation-metric">Combining metrics to a single evaluation metric</h2>
+<h2 id="combining-metrics-to-a-single-evaluation-metric">
+<a class="anchor" href="#combining-metrics-to-a-single-evaluation-metric" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining metrics to a single evaluation metric</h2>
 <p><a href="#3">[3]</a> seemingly opposes <a href="#1">[1]</a> and <a href="#2">[2]</a> and recommends that we decide on one single metric in order to be able to iterate quickly and develop and rank new models, and argues that using a slate of different metrics is more suited for model diagnostics than evaluation. This approach is also <a href="https://www.coursera.org/lecture/machine-learning-projects/single-number-evaluation-metric-wIKkC">recommended by the famous Andrew Ng</a> for model development.</p>
 
 <p><a href="#3">[3]</a> discusses metrics for classification models, where we measure false positives and false negatives, bringing us to precision and recall, precision being the fraction of positive predictions that are correct, and recall being the fraction of predictions on the positive class that are correct. Two different models are examined, one with better precision, and one with better recall. When choosing between the two, we choose how much better precision or recall we want to get, by sacrificing the other.</p>
@@ -282,7 +320,8 @@ window.onload = wrap_img;
 <ul>
   <li>Linear relationships
     <ul>
-      <li><strong>Weighted arithmetic mean</strong>: A simple arithmetic mean is just 0.5P + 0.5R. We would weight precision and recall equally, always being willing to trade one unit of precision for one unit of recall. We could weight precision and recall differently, for example by saying we will trade one unit of precision for <em>a</em> units of recall, indicating for <em>a &gt; 0</em> that we care more about precision than recall. This represents a <strong>linear relationship</strong> between the trade-off. If <em>a = 2</em>, a model with a precision of 80 % and recall of 40 % is equally good as a model with precision of 70 % and recall of 60 %.</li>
+      <li>
+<strong>Weighted arithmetic mean</strong>: A simple arithmetic mean is just 0.5P + 0.5R. We would weight precision and recall equally, always being willing to trade one unit of precision for one unit of recall. We could weight precision and recall differently, for example by saying we will trade one unit of precision for <em>a</em> units of recall, indicating for <em>a &gt; 0</em> that we care more about precision than recall. This represents a <strong>linear relationship</strong> between the trade-off. If <em>a = 2</em>, a model with a precision of 80 % and recall of 40 % is equally good as a model with precision of 70 % and recall of 60 %.</li>
     </ul>
   </li>
   <li>
@@ -302,11 +341,14 @@ A geometric mean is closer to the linear relationship than the harmonic mean. Wh
 
 <p>The author argues that whether or not arithmetic means are sufficient depends on the nature of the problem. In clinical situations, arithmetic means are often sufficient. Each individual experiences one single prediction from the model. The author works in retail, where the rate of false positive to false negative classifications is valued differently based on the level of false positives, and each individual experiences a range of predictions from the model. As the author puts it, it is not each single prediction that matters, but the <em>overall impression</em>, as is typical for information retrieval problems. For example, at a high recall (we are classifying most dresses as dresses), another point of recall isn’t that important, because a customer will find the dress they are looking for, and it is more important to improve precision, such that there are fewer false positives. Equivalenty, if precision is very high, it is probably more important to work on the recall, making sure the customer can be exposed to all dresses, rather than making sure that the customer is not exposed to something which is not a dress.</p>
 
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
 <p>It seems that everyone has a favorite urban legend of how a metric was gamed or lead to unforseen consequences, be it from human experience or a reinforcement learning agent. The three articles seem to assess the situation differently:</p>
 <ul>
-  <li><a href="#1">[1]</a> proposes different ways to enrich simple metrics: using several metrics, using qualitative accounts in addition, and letting stakeholders take part in defining metrics. Spending more time defining and reviewing effects of metrics with stakeholders it probably time well spent, although iteration cycles for models will be longer with a slate of metrics. Although I like the idea of explicitly stating the intended purpose and out-of-scope use cases for a model, I wonder how it should be implemented in order to keep it updated and helpful for relevant end users.</li>
-  <li><a href="#2">[2]</a> does not directly propose a solution, but exposes a problem and the settings in which we should investigate whether our models have hidden stratifications that may worsen end outcomes although performance metrics show improvements. Although these problems do not always lead to fatal outcomes, investigating models to find subdomains of poor performance is a good practice to improve models, and should be practiced systematically.</li>
+  <li>
+<a href="#1">[1]</a> proposes different ways to enrich simple metrics: using several metrics, using qualitative accounts in addition, and letting stakeholders take part in defining metrics. Spending more time defining and reviewing effects of metrics with stakeholders it probably time well spent, although iteration cycles for models will be longer with a slate of metrics. Although I like the idea of explicitly stating the intended purpose and out-of-scope use cases for a model, I wonder how it should be implemented in order to keep it updated and helpful for relevant end users.</li>
+  <li>
+<a href="#2">[2]</a> does not directly propose a solution, but exposes a problem and the settings in which we should investigate whether our models have hidden stratifications that may worsen end outcomes although performance metrics show improvements. Although these problems do not always lead to fatal outcomes, investigating models to find subdomains of poor performance is a good practice to improve models, and should be practiced systematically.</li>
   <li>Whereas <a href="#1">[1]</a> and <a href="#2">[2]</a> show weaknesses of single metric evaluation, <a href="#3">[3]</a> argues for the benefits to model development iteration cycles. I find this very compelling. Although I haven’t used the particular metrics described in the series in practice, the concept of experimenting with finding and reviewing which metric is used seems to mediate some of the shortcomings of single metrics. Using several metrics lead us to implicitly weighing them against eachother, whereas combining metrics to a single number leads to an explicit definition, which again leads to concrete and transparent examples which we can discuss with stakeholders.</li>
 </ul>
 

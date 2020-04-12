@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-12T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"pytest is a widely used Python framework for testing, which is flexible for small and large test suites.","headline":"Testing with pytest","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html"},"url":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html","@context":"https://schema.org"}</script>
+{"description":"pytest is a widely used Python framework for testing, which is flexible for small and large test suites.","@type":"BlogPosting","headline":"Testing with pytest","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html"},"url":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/notes/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gunnhildsp.github.io/notes/feed.xml" title="Gunnhild's notes" /><link rel="shortcut icon" type="image/x-icon" href="/notes/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Testing with pytest | Gunnhild’s notes</title>
@@ -30,7 +30,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-12T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"pytest is a widely used Python framework for testing, which is flexible for small and large test suites.","headline":"Testing with pytest","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html"},"url":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html","@context":"https://schema.org"}</script>
+{"description":"pytest is a widely used Python framework for testing, which is flexible for small and large test suites.","@type":"BlogPosting","headline":"Testing with pytest","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html"},"url":"https://gunnhildsp.github.io/notes/python/pytest/testing/2020/04/12/pytest.html","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -208,9 +208,9 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Put-your-tests-where-pytest-can-find-them">
-<a class="anchor" href="#Put-your-tests-where-pytest-can-find-them" aria-hidden="true"><span class="octicon octicon-link"></span></a>Put your tests where <code>pytest</code> can find them<a class="anchor-link" href="#Put-your-tests-where-pytest-can-find-them"> </a>
+<a class="anchor" href="#Put-your-tests-where-pytest-can-find-them" aria-hidden="true"><span class="octicon octicon-link"></span></a>Put your tests where pytest can find them<a class="anchor-link" href="#Put-your-tests-where-pytest-can-find-them"> </a>
 </h2>
-<p><code>pytest</code> finds your tests automatically according to (what I have just learned is) <a href="https://docs.pytest.org/en/latest/goodpractices.html#conventions-for-python-test-discovery">standard test discovery</a> by:</p>
+<p><a href="https://docs.pytest.org/en/latest/">pytest</a> finds your tests automatically according to (what I have just learned is) <a href="https://docs.pytest.org/en/latest/goodpractices.html#conventions-for-python-test-discovery">standard test discovery</a> by:</p>
 <ul>
 <li>recursively looking through directories</li>
 <li>search for files named <code>test_*.py</code> or <code>*_test.py</code>
@@ -754,7 +754,7 @@ test_save_example.py </span><span class="ansi-green-intense-fg ansi-bold">.</spa
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Use-monkeypatch-to-set-environment-variables">
-<a class="anchor" href="#Use-monkeypatch-to-set-environment-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use <code>monkeypatch</code> to set environment variables<a class="anchor-link" href="#Use-monkeypatch-to-set-environment-variables"> </a>
+<a class="anchor" href="#Use-monkeypatch-to-set-environment-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use monkeypatch to set environment variables<a class="anchor-link" href="#Use-monkeypatch-to-set-environment-variables"> </a>
 </h3>
 <p>We often use environment variables to configure our functionality, such as where they should output their results, login credentials for databases and services. Keeping these configs in environment variables is <a href="https://12factor.net/config">recommended</a> in order to run the same code with different configurations in different environments: locally when developing, in a test environment and in a production environment. To test these functions, we can use <a href="https://docs.pytest.org/en/latest/monkeypatch.html">monkeypatching</a>. Let's say we read environment variables in our function:</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -922,7 +922,7 @@ test_monkeypatching.py <span class="ansi-green-fg">.</span><span class="ansi-gre
     <svg class="octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>In this test, I have parametrized an input parameter to the function, but above I argued that input arguments is better suited for test parametrization than fixture parametrization. A better example would perhaps be if the data in the test was an attribute of a class, and we wished to create a mock of the class to test. It may also be suitable to extract input parameters to fixtures when creation is complex. In any case, the example serves to show some of the functionality of fixtures that we can use. 
 </div>
-Where we left off, our test only covered one execution path: the first branch of the if statement, i.e. if the input dataframe is non-empty. If we want to test the other branch, we can parametrize the fixture to return different dataframes. When a test relies on a parametrized fixture, it will be rerun for all parametrizations of the fixture.
+<p>Where we left off, our test only covered one execution path: the first branch of the if statement, i.e. if the input dataframe is non-empty. If we want to test the other branch, we can parametrize the fixture to return different dataframes. When a test relies on a parametrized fixture, it will be rerun for all parametrizations of the fixture.</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.testing</span> <span class="kn">import</span> <span class="n">assert_frame_equal</span>
