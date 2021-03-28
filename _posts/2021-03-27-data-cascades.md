@@ -51,9 +51,10 @@ The paper provides detailed descriptions of the four most prevalent categories o
 
 ## The problem can be avoided
 Step-wise and early interventions in the development process enables practicioners to avoid data cascades, according to the investigation. However, this was rare, due to undervaluation of data work and partner dependencies. Katie Bauer recently connected early intervention in reminds of Katie Bauer's thread on how the concept **shifting left**, used about information security work in the book [Accelerate](https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339), applies to data science and data practices: 
+
 > twitter: https://twitter.com/imightbemary/status/1371857703077736454?s=20
 
-In addition to the mitigating actions individuals can take, we need to shift our reactive processes, viewing data as "grunt work", to a proactive focus on data excellence. The paper suggests three improvement areas for education, conferences and organisations to begin to move the needle on the prestige of data work. In addition, the practices of well performing practitioners were 
+In addition to the mitigating actions individuals can take, we need to shift our reactive processes, viewing data as "grunt work", to a proactive focus on data excellence. The paper suggests three improvement areas for education, conferences and organisations to begin to move the needle on the prestige of data work, and summarized the practices of the high-performing teams.
 
 ### What should you change tomorrow? Incorporate best software practices adapted to data
 Data cascades surface the need for several feedback channels at different stages in the AI lifecycle. The teams with the fewest data cascades showed some common practices: 
