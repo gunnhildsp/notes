@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Data excellence as a first-class citizen of AI | Gunnhild’s notes</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Data excellence as a first-class citizen of AI" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence." />
+<meta property="og:description" content="Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence." />
+<link rel="canonical" href="https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html" />
+<meta property="og:url" content="https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html" />
+<meta property="og:site_name" content="Gunnhild’s notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-27T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence.","@type":"BlogPosting","url":"https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html","headline":"Data excellence as a first-class citizen of AI","dateModified":"2021-03-27T00:00:00-05:00","datePublished":"2021-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/notes/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gunnhildsp.github.io/notes/feed.xml" title="Gunnhild's notes" /><link rel="shortcut icon" type="image/x-icon" href="/notes/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Data excellence as a first-class citizen of AI | Gunnhild’s notes</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Data excellence as a first-class citizen of AI" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence." />
+<meta property="og:description" content="Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence." />
+<link rel="canonical" href="https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html" />
+<meta property="og:url" content="https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html" />
+<meta property="og:site_name" content="Gunnhild’s notes" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-27T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence.","@type":"BlogPosting","url":"https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html","headline":"Data excellence as a first-class citizen of AI","dateModified":"2021-03-27T00:00:00-05:00","datePublished":"2021-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://gunnhildsp.github.io/notes/data-quality/2021/03/27/data-cascades.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://gunnhildsp.github.io/notes/feed.xml" title="Gunnhild's notes" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/notes/">Gunnhild&#39;s notes</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/notes/about/">About</a><a class="page-link" href="/notes/search/">Search</a><a class="page-link" href="/notes/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Data excellence as a first-class citizen of AI</h1><p class="page-description">Data quality issues are prevalent and invisible, but avoidable if we design for and incentivize data excellence.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-27T00:00:00-05:00" itemprop="datePublished">
+        Mar 27, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/notes/categories/#data-quality">data-quality</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#garbage-in-arrow_right-garbage-out">Garbage in :arrow_right: garbage out</a></li>
+<li class="toc-entry toc-h2"><a href="#data-cascades-are-hard-to-spot-and-require-non-conventional-ai-practices">Data cascades are hard to spot, and require non-conventional AI practices</a></li>
+<li class="toc-entry toc-h2"><a href="#undervaluation-of-data-work-manifests-in-ml-metrics-ml-prestige-and-education-programs">Undervaluation of data work manifests in ML metrics, ML prestige and education programs</a></li>
+<li class="toc-entry toc-h2"><a href="#categories-of-data-cascades">Categories of data cascades</a></li>
+<li class="toc-entry toc-h2"><a href="#the-problem-can-be-avoided">The problem can be avoided</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#what-should-you-change-tomorrow-incorporate-best-software-practices-adapted-to-data">What should you change tomorrow? Incorporate best software practices adapted to data</a></li>
+<li class="toc-entry toc-h3"><a href="#research-is-required-to-go-from-goodness-of-fit-to-goodness-of-data">Research is required to go from goodness-of-fit to goodness-of-data</a></li>
+<li class="toc-entry toc-h3"><a href="#organisations-and-conferences-should-incentivise-data-excellence">Organisations and conferences should incentivise data excellence</a></li>
+<li class="toc-entry toc-h3"><a href="#ai-education-should-provide-real-world-data-literacy-training">AI education should provide real world data literacy training</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#additions-to-the-reading-list">Additions to the reading list</a></li>
+</ul><p>A recent blog post from Vicki Boykis drew me in as it revolves around the topic of implicit knowledge: <a href="https://veekaybee.github.io/2021/03/26/data-ghosts/">The ghosts in the data</a>. Implicit knowledge hits us from many differents perspectives nowadays, from automating implicit knowledge through AI, discovering and sharing implicit knowledge in distributed or hybrid workplaces, when enabling beginner coders to develop and maintain applications, and when documenting everything from software applications to model experiments. As all pythonistas know: <a href="https://www.python.org/dev/peps/pep-0020/">Explicit is better than implicit</a>.</p>
+
+<p>The blog post pointed me to the paper <a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/0d556e45afc54afeb2eb6b51a9bc1827b9961ff4.pdf">“Everyone wants to do the model work, not the data work”: Data Cascades in High-Stakes AI</a>. Vicki Boykis refers to this as one of the first formal sources citing explicitly the previously implicit knowledge that data quality matters for ML model performance. <em>Data cascades</em> is defined as <em>compounding events causing negative, downstream effects from data issues, resulting in technical debt over time</em>. The paper is based on a qualitative study of practices among 53 AI practitioners working in <em>high stakes</em> domain, which they define as <em>domains that have safety impacts on living beings</em>, such as climate change and maternal health.</p>
+
+<p>Data workers play a critical role in creating and maintaining AI systems, and their work has downstream impact.</p>
+
+<h2 id="garbage-in-arrow_right-garbage-out">
+<a class="anchor" href="#garbage-in-arrow_right-garbage-out" aria-hidden="true"><span class="octicon octicon-link"></span></a>Garbage in :arrow_right: garbage out</h2>
+<p>Data quality is crucial to ML model performance. Andrew Ng provided a few examples of the importance of data quality in his recent webinar <a href="https://www.youtube.com/watch?v=06-AZXmwHjo">A chat with Andrew on MLOps: From model-centric to data-centric AI</a>. However, this field is quite immature, demonstrated by the fact that the webinar, and deeplearning.ai courses in general, lack introductions to concrete tools and rigorous processes to lean data-centric.</p>
+
+<p>Data cleaning usually involves integrity constraints, type inference, schema matching, outlier detection and more. Several tools have been created to streamline this process, such as <a href="https://greatexpectations.io/">Great expectations</a>, <a href="https://www.tensorflow.org/tfx/guide/tfdv">Tensorflow data validation</a> and <a href="https://pydeequ.readthedocs.io/en/latest/README.html">Deequ</a>. An important trait here is to catch the bugs through data validation, not through model performance deterioration: the data quality work will suffer when it is seen as a by-product of model performance monitoring.</p>
+
+<p>Data validation and cleaning focuses on one part of the data lifecycle, but especially in high stakes environment, the birth and afterlife of data needs attion as well, i.e. the data creation, collection process and downstream life of data. We should view data as a dynamic entity with possibility for drifts and skews, requiring follow-up. A further complicating factor is that data quality work is cross-functional in nature: dataset definition and labelling accuracy often depend on subject matter expertice.</p>
+
+<h2 id="data-cascades-are-hard-to-spot-and-require-non-conventional-ai-practices">
+<a class="anchor" href="#data-cascades-are-hard-to-spot-and-require-non-conventional-ai-practices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data cascades are hard to spot, and require non-conventional AI practices</h2>
+<p>According to the paper, data cascades are <strong>opaque</strong>, meaning that 
+Practitioners were not equipped to identify upstream or downstream issues. They lacked tools and metrics to detect and measure the effects on systems. As a proxy, model performance metrics were used, which test the whole system, not the datasets.</p>
+
+<p>The study also found that <strong>“conventional” AI practices are insufficient</strong>: Applying “conventional” AI practices in high stakes domains triggers data cascades. Some examples provided are moving fast, hyperparameter tuning to improve model performance instead of data quality work.</p>
+
+<h2 id="undervaluation-of-data-work-manifests-in-ml-metrics-ml-prestige-and-education-programs">
+<a class="anchor" href="#undervaluation-of-data-work-manifests-in-ml-metrics-ml-prestige-and-education-programs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Undervaluation of data work manifests in ML metrics, ML prestige and education programs</h2>
+<p>The paper describes several factors in the ML ecosystem that contribute to data cascades, among the the <strong>incentives and currency in AI</strong>, and the <strong>lack of data education</strong>.</p>
+
+<p>Model improvements can be easily tracked and rewarded through model performance metrics. Data improvements are not monitored in the same way. In addition, model development and architectures holds a prestige in the community, whereas data work is neglected. ImageNet, the database of labelled images which has been crucial for computer vision, initially received little recognition as ML work. Fei-Fei Li, the AI researcher who lead the project, struggled to receive funding in the beginning, with rejections commenting that it was <a href="https://qz.com/1034972/the-data-that-changed-the-direction-of-ai-research-and-possibly-the-world/">shameful that a Princeton professor would research the topic</a>. The undervaluation of data work is not only among practitioners: The study found that there was little buy-in along decision makers and funders for working on data quality improvement.</p>
+
+<p>Lack of focus on data in education programs left practitioners at a loss when faced with the realities of data in the wild: “In real life we never see clean data,” one of the subjects said. In spite of this, training and education provides little guidance on how to collect, clean and document datasets, let alone handle live data. The study included both US practitioners, mostly from AI specialisations in graduate programs, and Indian, West African and East African practitioners, who were mostly self-taught after completing CS degrees. Data engineering was under-emphasized in both routes.</p>
+
+<h2 id="categories-of-data-cascades">
+<a class="anchor" href="#categories-of-data-cascades" aria-hidden="true"><span class="octicon octicon-link"></span></a>Categories of data cascades</h2>
+<p>The paper provides detailed descriptions of the four most prevalent categories of data cascades, including many disheartening citations from the practitioners.</p>
+<ul>
+  <li>
+<strong>Physical-world brittleness</strong> was the most common, and is caused by changes in the world we are modelling, such as hardware drifts, changes in environment, human behaviour or legislation. Mitigations to physical-world brittleness cascades included:
+    <ul>
+      <li>
+<strong>Monitoring data sources</strong> (often at an example level)</li>
+      <li>
+<strong>Introducing noise in the training dataset</strong> to overcome the disparage between pristine training data and messy live data</li>
+      <li>
+<strong>Investing in data literacy</strong> for system operators and field partners as also introduced in a few cases</li>
+    </ul>
+  </li>
+  <li>
+<strong>Inadequate domain expertise</strong>: When AI practitioners were tasked with defining ground truth, identifying the necessary feature set and interpreting data, data cascades were triggered. These errors were <strong>very costly</strong>, often only discovered after model deployment. Consequences ranged from requiring additional data collection, addition of new data sources to entire data collection pipelines needed to be reworked. The study gives two important subclasses of inadequate domain expertise: Subjectivity in ground truth, leading to ambiguous labels, and defining and collecting representative data. Mitigations included:
+    <ul>
+      <li>
+<strong>End-to-end domain expertise involvement</strong>, not only in early stages or trouble shooting situations, as many projects do, but deep involvement.</li>
+      <li>
+<strong>Defining representative datasets</strong> particular to the domain and problem definition at hand is also crucial</li>
+    </ul>
+  </li>
+  <li>
+<strong>Concflicting reward systems</strong>: Conventional AI practices viewing data collection as a non-technical task to be outsourced to field partners, caused problems in high stakes domains. Common problems were field partners missing incentives for data quality and having conflicting tasks. In addition, field partners often had poor data literacy, and didn’t understand the impact of the data collection process. Mitigating measures included
+    <ul>
+      <li>
+<strong>Data literacy training</strong>, however, this was very rarely provided. When training was given, data quality was reported to improve. One practitioner reported providing real time feedback on data quality indicators to field partners, as a training.</li>
+      <li>
+<strong>Partnerships with field partners</strong>, lead by top level management, could have improved the incentive and task conflicts, but most practitioners reported that top level management did not prioritize this.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Poor cross-organisational documentation</strong>: Conventional AI practice of neglecting data documentation is especially damaging in domains where the volume of data is low. <a href="https://arxiv.org/pdf/1803.09010.pdf">Documentation practices have been suggested</a>, but are not widely implemented. These cascades were often discovered through chance through manual review. Many practitioners also complained of lack of standards when entering data, and issues with vendor documentation for data collecting equiment. Mitigating these issues involved clear procedures and meticulous attention:
+    <ul>
+      <li>Data collection plans</li>
+      <li>Data strategy handbooks</li>
+      <li>Design documents</li>
+      <li>File conventions</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="the-problem-can-be-avoided">
+<a class="anchor" href="#the-problem-can-be-avoided" aria-hidden="true"><span class="octicon octicon-link"></span></a>The problem can be avoided</h2>
+<p>Step-wise and early interventions in the development process enables practicioners to avoid data cascades, according to the investigation. However, this was rare, due to undervaluation of data work and partner dependencies. Katie Bauer recently connected early intervention in reminds of Katie Bauer’s thread on how the concept <strong>shifting left</strong>, used about information security work in the book <a href="https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339">Accelerate</a>, applies to data science and data practices:</p>
+<blockquote>
+  <p>twitter: https://twitter.com/imightbemary/status/1371857703077736454?s=20</p>
+</blockquote>
+
+<p>In addition to the mitigating actions individuals can take, we need to shift our reactive processes, viewing data as “grunt work”, to a proactive focus on data excellence. The paper suggests three improvement areas for education, conferences and organisations to begin to move the needle on the prestige of data work. In addition, the practices of well performing practitioners were</p>
+
+<h3 id="what-should-you-change-tomorrow-incorporate-best-software-practices-adapted-to-data">
+<a class="anchor" href="#what-should-you-change-tomorrow-incorporate-best-software-practices-adapted-to-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>What should you change tomorrow? Incorporate best software practices adapted to data</h3>
+<p>Data cascades surface the need for several feedback channels at different stages in the AI lifecycle. The teams with the fewest data cascades showed some common practices:</p>
+<ul>
+  <li>step-wise feedback loops throughout the development iterations</li>
+  <li>frequenct model runs</li>
+  <li>close collaboration with domain experts and field partners</li>
+  <li>maintained clear data documentation</li>
+  <li>regular monitoring of incoming data</li>
+</ul>
+
+<p>These practices mirror software development practices adapted to data. This reduces uncertainty and data cascades building up.</p>
+
+<h3 id="research-is-required-to-go-from-goodness-of-fit-to-goodness-of-data">
+<a class="anchor" href="#research-is-required-to-go-from-goodness-of-fit-to-goodness-of-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Research is required to go from goodness-of-fit to goodness-of-data</h3>
+<p>Today, the community is overly reliant on goodness-of-fit metrics. This leads to creating models that fit well to training data, but ignoring the issue of whether the data fits the real world phenomenon we are modelling. In addition, the metrics are only available at a later stage in development, but course correction for data sources should start as early as possible. This could prevent data cascades, and ensure data can be used for several applications. Measuring goodness-of-data will also allow improvements. That being said, <a href="https://arxiv.org/ftp/arxiv/papers/2002/2002.08512.pdf">metrics</a> <a href="https://lineardigressions.com/episodes/2019/12/22/data-scientists-beware-of-simple-metrics">are</a> <a href="https://arxiv.org/pdf/1909.12475.pdf">always</a> <a href="https://gunnhildsp.github.io/notes/metrics/data-science/2020/03/07/metrics.html">problematic</a>, and as of now, research on goodness-of-data metrics is immature.</p>
+
+<h3 id="organisations-and-conferences-should-incentivise-data-excellence">
+<a class="anchor" href="#organisations-and-conferences-should-incentivise-data-excellence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organisations and conferences should incentivise data excellence</h3>
+<p>Scientific and purposeful processes outlined in human centered computing contrast the reality of the AI practitioners, who tended to view data as <em>operations</em>, far from the glamour of model work. Conferences should be part of the necessary culture change, accepting and highlighting data exellence. Organisations should reward data collection, pipeline maintenance, data documentation etc. in promotions and peer reviews. Data work is currently lopsided, with domain experts and field partners doing one-off inconvenient jobs. Data exellence emphasizes partnerships and deep involvement of domain experts, sharing credit for work should only be natural.</p>
+
+<h3 id="ai-education-should-provide-real-world-data-literacy-training">
+<a class="anchor" href="#ai-education-should-provide-real-world-data-literacy-training" aria-hidden="true"><span class="octicon octicon-link"></span></a>AI education should provide real world data literacy training</h3>
+<p>The practical data skill gap induced by pristine practice dataset in education is substancial. Training on data collection, curation and inter-disciplinary collaboration can help prepare future practitioners. There is a large body of work from human centered computing and data ethics to draw on.</p>
+
+<h2 id="additions-to-the-reading-list">
+<a class="anchor" href="#additions-to-the-reading-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additions to the reading list</h2>
+<p>The paper cites a lot of interesting work. I noted in particular the following papers:</p>
+<ul>
+  <li>Practitioners have shown to collaborate much less around datasets, relative to collaboration around code: <a href="https://arxiv.org/pdf/2001.06684.pdf">How do data science workers collaborate? Roles, workflows and tools</a> by Amy X Zhang, Michael Muller, and Dakuo Wang.</li>
+  <li>Melanie Feinberg describes data as a design material and our role as designers of data, not it’s appropriators: <a href="https://ils.unc.edu/~mfeinber/Feinberg%202017c.pdf">A design perspective on data</a> by Melanie Feinberg.</li>
+  <li>Muller et al. extend and outline five approaches of data scientists to perform analyses: <a href="http://library.usc.edu.ph/ACM/CHI2019/1proc/paper126.pdf">How data science work-ers work with data: Discovery, capture, curation, design, creation</a>, by Muller, Lange, Wang, Piorkowski, Tsay, Liao, Dugan and Erickson.</li>
+</ul>
+
+  </div><a class="u-url" href="/notes/data-quality/2021/03/27/data-cascades.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/notes/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/notes/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/notes/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Learning by writing things down</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gunnhildsp" title="gunnhildsp"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/gunnhildsp" title="gunnhildsp"><svg class="svg-icon grey"><use xlink:href="/notes/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
