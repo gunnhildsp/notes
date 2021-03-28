@@ -124,7 +124,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#garbage-in-arrow_right-garbage-out">Garbage in :arrow_right: garbage out</a></li>
+<li class="toc-entry toc-h2"><a href="#garbage-in-garbage-out">Garbage in, garbage out</a></li>
 <li class="toc-entry toc-h2"><a href="#data-cascades-are-hard-to-spot-and-require-non-conventional-ai-practices">Data cascades are hard to spot, and require non-conventional AI practices</a></li>
 <li class="toc-entry toc-h2"><a href="#undervaluation-of-data-work-manifests-in-ml-metrics-ml-prestige-and-education-programs">Undervaluation of data work manifests in ML metrics, ML prestige and education programs</a></li>
 <li class="toc-entry toc-h2"><a href="#categories-of-data-cascades">Categories of data cascades</a></li>
@@ -143,8 +143,8 @@ window.onload = wrap_img;
 
 <p>Data workers play a critical role in creating and maintaining AI systems, and their work has downstream impact.</p>
 
-<h2 id="garbage-in-arrow_right-garbage-out">
-<a class="anchor" href="#garbage-in-arrow_right-garbage-out" aria-hidden="true"><span class="octicon octicon-link"></span></a>Garbage in :arrow_right: garbage out</h2>
+<h2 id="garbage-in-garbage-out">
+<a class="anchor" href="#garbage-in-garbage-out" aria-hidden="true"><span class="octicon octicon-link"></span></a>Garbage in, garbage out</h2>
 <p>Data quality is crucial to ML model performance. Andrew Ng provided a few examples of the importance of data quality in his recent webinar <a href="https://www.youtube.com/watch?v=06-AZXmwHjo">A chat with Andrew on MLOps: From model-centric to data-centric AI</a>. However, this field is quite immature, demonstrated by the fact that the webinar, and deeplearning.ai courses in general, lack introductions to concrete tools and rigorous processes to lean data-centric.</p>
 
 <p>Data cleaning usually involves integrity constraints, type inference, schema matching, outlier detection and more. Several tools have been created to streamline this process, such as <a href="https://greatexpectations.io/">Great expectations</a>, <a href="https://www.tensorflow.org/tfx/guide/tfdv">Tensorflow data validation</a> and <a href="https://pydeequ.readthedocs.io/en/latest/README.html">Deequ</a>. An important trait here is to catch the bugs through data validation, not through model performance deterioration: the data quality work will suffer when it is seen as a by-product of model performance monitoring.</p>
