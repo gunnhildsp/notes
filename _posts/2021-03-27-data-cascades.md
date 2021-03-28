@@ -11,7 +11,7 @@ The blog post pointed me to the paper [“Everyone wants to do the model work, n
 
 Data workers play a critical role in creating and maintaining AI systems, and their work has downstream impact. 
 
-## Garbage in :arrow_right: garbage out 
+## Garbage in, garbage out 
 Data quality is crucial to ML model performance. Andrew Ng provided a few examples of the importance of data quality in his recent webinar [A chat with Andrew on MLOps: From model-centric to data-centric AI](https://www.youtube.com/watch?v=06-AZXmwHjo). However, this field is quite immature, demonstrated by the fact that the webinar, and deeplearning.ai courses in general, lack introductions to concrete tools and rigorous processes to lean data-centric.
 
 Data cleaning usually involves integrity constraints, type inference, schema matching, outlier detection and more. Several tools have been created to streamline this process, such as [Great expectations](https://greatexpectations.io/), [Tensorflow data validation](https://www.tensorflow.org/tfx/guide/tfdv) and [Deequ](https://pydeequ.readthedocs.io/en/latest/README.html). An important trait here is to catch the bugs through data validation, not through model performance deterioration: the data quality work will suffer when it is seen as a by-product of model performance monitoring.
