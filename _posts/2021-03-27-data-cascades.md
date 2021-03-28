@@ -50,7 +50,7 @@ The paper provides detailed descriptions of the four most prevalent categories o
   * File conventions
 
 ## The problem can be avoided
-Step-wise and early interventions in the development process enables practicioners to avoid data cascades, according to the investigation. However, this was rare, due to undervaluation of data work and partner dependencies. Katie Bauer recently connected early intervention in reminds of Katie Bauer's thread on how the concept **shifting left**, used about information security work in the book [Accelerate](https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339), applies to data science and data practices: 
+Step-wise and early interventions in the development process enables practicioners to avoid data cascades, according to the investigation. However, this was rare, due to undervaluation of data work and partner dependencies. Katie Bauer recently published a related thread on how the concept **shifting left**, used about information security work in the book [Accelerate](https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339), applies to data science and data practices: 
 
 {% twitter https://twitter.com/imightbemary/status/1371857703077736454?s=20 %}
 
